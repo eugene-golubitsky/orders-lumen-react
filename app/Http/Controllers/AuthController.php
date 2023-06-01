@@ -12,15 +12,10 @@ use Illuminate\Support\Facades\DB;
  */
 class AuthController extends Controller {
     public function index(Request $request) {
-        /**
-         * TODO
-         * use bcrypt for passwords_hash
-         */
         $user = DB::table('users')
             ->where('email', '=', $request->input('email'))
             ->get();
-
-
+        
         if(count($user) === 1) {
             if(password_verify($request->input('password'), $user[0]->password_hash)) {
                 $user = User::find($user[0]->id);
