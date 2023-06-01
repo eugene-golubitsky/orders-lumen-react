@@ -19,14 +19,15 @@ export const Login = (props) => {
         const access_token = data?.data?.access_token;
         if(access_token) {
             sessionStorage.setItem('access_token', access_token);
+            console.log(`access_token=${access_token}`);
+            data = await axios.post(`${baseUrl}/api/products`, {limit: 500}, {headers: { Authorization: `Bearer ${access_token}` }})
+            .catch(err => {console.log(err);})
+            if(data) {
+                props.stateChanger('products');
+                props.setProducts(data?.data);
+            }
         }
-        console.log(`access_token=${access_token}`);
-        data = await axios.post(`${baseUrl}/api/products`, {limit: 500}, {headers: { Authorization: `Bearer ${access_token}` }})
-        .catch(err => {console.log(err);})
-        if(data) {
-            props.stateChanger('products');
-            props.setProducts(data?.data);
-        }
+        
     }
     return (
         <div className="auth-form-container">

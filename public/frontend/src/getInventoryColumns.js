@@ -35,11 +35,7 @@ const getColumns = () => {
       field: "price_cents",
       label: "Price (cents)",
     },
-    {
-      id: "8",
-      field: "cost_cents",
-      label: "Cost (cents)",
-    },
+    
   ];
 };
 
