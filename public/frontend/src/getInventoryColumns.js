@@ -32,10 +32,18 @@ const getColumns = () => {
     },
     {
       id: "7",
-      field: "price_cents",
-      label: "Price (cents)",
+      field: "price",
+      label: "Price",
     },
-    
+    {
+      id: "8",
+      field: "total_price",
+      label: "Total Price",
+      sort: ({ a, b, isAscending }) => {
+        let aa = parseFloat(a.substr(1)), bb = parseFloat(b.substr(1));
+        return aa < bb ? isAscending ? -1 : 1 : (aa > bb ? isAscending ? 1 : -1 : 0);
+    }
+    },
   ];
 };
 

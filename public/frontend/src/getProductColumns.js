@@ -29,7 +29,21 @@ const getColumns = () => {
       id: "5",
       field: "skus",
       label: "Skus",
-      
+    },
+    {
+      id: "6",
+      field: "total_price",
+      label: "Total Revenue",
+      sort: ({ a, b, isAscending }) => {
+          let aa = 0, bb = 0;
+          if(a) {
+            aa = parseFloat(a.substr(1))
+          } 
+          if(b) {
+            bb = parseFloat(b.substr(1));
+          }
+          return aa < bb ? isAscending ? -1 : 1 : (aa > bb ? isAscending ? 1 : -1 : 0);
+      }
     },
     
   ];

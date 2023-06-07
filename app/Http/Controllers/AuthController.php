@@ -15,7 +15,7 @@ class AuthController extends Controller {
         $user = DB::table('users')
             ->where('email', '=', $request->input('email'))
             ->get();
-        
+
         if(count($user) === 1) {
             if(password_verify($request->input('password'), $user[0]->password_hash)) {
                 $user = User::find($user[0]->id);

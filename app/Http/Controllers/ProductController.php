@@ -20,7 +20,10 @@ class ProductController extends Controller {
     public function getProducts(Request $request) {
         $user = $request->user();
         $query = DB::table('products')
-            ->select("products.*", DB::raw('GROUP_CONCAT(inventory.sku) as skus'))
+            ->select("products.*"
+                , DB::raw('GROUP_CONCAT(inventory.sku) as skus')
+                , DB::raw("CONCAT('$',ROUND(SUM((inventory.quantity*inventory.price_cents)/100),2)) total_price")
+            )
             ->distinct()
             ->leftJoin('inventory', 'products.id', '=', 'inventory.product_id')
             ->where('products.admin_id', '=', $user->id);

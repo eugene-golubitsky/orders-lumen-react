@@ -9,7 +9,11 @@ class InventoryController extends Controller {
     public function index(Request $request) {
         $user = $request->user();
         $query = DB::table('products')
-            ->select("inventory.*", "products.product_name")
+            ->select("inventory.*"
+                , "products.product_name"
+                , DB::raw("CONCAT('$',ROUND(inventory.price_cents/100,2)) price")
+                , DB::raw("CONCAT('$',ROUND((inventory.quantity*inventory.price_cents)/100,2)) total_price")
+            )
             ->distinct()
             ->leftJoin('inventory', 'products.id', '=', 'inventory.product_id')
             ->where('products.admin_id', '=', $user->id);
